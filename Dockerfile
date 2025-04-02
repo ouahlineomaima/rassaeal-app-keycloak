@@ -6,7 +6,7 @@ ENV KC_FEATURES=preview
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 
-# Configure a database vendor
+# Configure database vendor
 ENV KC_DB=postgres
 
 # Build Keycloak
@@ -24,10 +24,19 @@ RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysi
 ENV KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
 ENV KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
 
-# Use environment variables for database connection
+# Database Configuration (from environment variables)
 ENV KC_DB_URL=${KC_DB_URL}
 ENV KC_DB_USERNAME=${KC_DB_USERNAME}
 ENV KC_DB_PASSWORD=${KC_DB_PASSWORD}
 
-# Start Keycloak
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
+# Set ports from environment variables (default to Render-compatible values)
+ENV KC_HTTP_PORT=${KC_HTTP_PORT:-10000}
+ENV KC_HTTPS_PORT=${KC_HTTPS_PORT:-8443}
+
+# Expose the required ports
+EXPOSE ${KC_HTTP_PORT}
+EXPOSE ${KC_HTTPS_PORT}
+
+# Start Keycloak with custom ports
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=${KC_HTTP_PORT}", "--https-port=${KC_HTTPS_PORT}"]
+
