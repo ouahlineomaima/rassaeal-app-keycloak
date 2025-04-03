@@ -29,14 +29,10 @@ ENV KC_DB_URL=${KC_DB_URL}
 ENV KC_DB_USERNAME=${KC_DB_USERNAME}
 ENV KC_DB_PASSWORD=${KC_DB_PASSWORD}
 
-# Set ports from environment variables (default to Render-compatible values)
-ENV KC_HTTP_PORT=${KC_HTTP_PORT}
-ENV KC_HTTPS_PORT=${KC_HTTPS_PORT}
 
 # Expose the required ports
-EXPOSE ${KC_HTTP_PORT}
-EXPOSE ${KC_HTTPS_PORT}
+EXPOSE 10000 8443
 
 # Start Keycloak with custom ports
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=${KC_HTTP_PORT}", "--https-port=${KC_HTTPS_PORT}"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=10000", "--https-port=8443"]
 
