@@ -17,9 +17,6 @@ COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 
 WORKDIR /opt/keycloak
 
-# Setup certificates
-RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
-
 # Keycloak Admin Credentials (use env variables instead of hardcoding)
 ENV KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
 ENV KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
@@ -34,5 +31,5 @@ ENV KC_DB_PASSWORD=${KC_DB_PASSWORD}
 EXPOSE 10000
 
 # Start Keycloak with custom ports
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=10000", "--https-port=10000"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=10000", "--https-port=10000", "--proxy=edge"]
 
