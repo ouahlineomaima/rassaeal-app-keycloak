@@ -31,8 +31,8 @@ ENV KC_DB_PASSWORD=${KC_DB_PASSWORD}
 
 
 # Expose the required ports
-EXPOSE 10000 8443
+EXPOSE 10000
 
 # Start Keycloak with custom ports
-ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=10000", "--https-port=8443"]
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start", "--http-port=10000", "--https-port=10000"]
 
