@@ -30,8 +30,8 @@ ENV KC_DB_USERNAME=${KC_DB_USERNAME}
 ENV KC_DB_PASSWORD=${KC_DB_PASSWORD}
 
 # Set ports from environment variables (default to Render-compatible values)
-ENV KC_HTTP_PORT=${KC_HTTP_PORT:-10000}
-ENV KC_HTTPS_PORT=${KC_HTTPS_PORT:-8443}
+ENV KC_HTTP_PORT=${KC_HTTP_PORT}
+ENV KC_HTTPS_PORT=${KC_HTTPS_PORT}
 
 # Expose the required ports
 EXPOSE ${KC_HTTP_PORT}
